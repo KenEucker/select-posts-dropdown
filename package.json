@@ -1,0 +1,30 @@
+{
+  "name": "select-posts-dropdown",
+  "version": "0.0.1",
+  "description": "A react component for listing and selecting wordpress posts using wp-api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KenEucker/select-posts-dropdown.git"
+  },
+  "keywords": [
+    "react",
+    "wordpress",
+    "gutenberg"
+  ],
+  "author": "Ken Eucker <keneucker@gmail.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/KenEucker/select-posts-dropdown/issues"
+  },
+  "homepage": "https://github.com/KenEucker/select-posts-dropdown#readme",
+  "devDependencies": {
+    "@wordpress/api-fetch": "^3.1.2",
+    "react": "^16.8.6",
+    "semantic-ui-react": "^0.86.0",
+    "styled-components": "^4.2.0"
+  }
+}
