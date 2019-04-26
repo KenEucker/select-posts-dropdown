@@ -4,6 +4,11 @@ A react component for listing and selecting wordpress posts using wp-api
 SelectPostsDropdown is a React component to render a dropdown that will be populated with the posts, of the type specificed, and allows the user to search through items. This components takes care of updating the state of the dropdown menu
 and uses render props to fetch and then load the posts listed by title.
 
+## Install
+```bash
+  yarn install select-posts-dropdown
+```
+
 ## Usage
 
 
