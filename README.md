@@ -61,13 +61,22 @@ The text to place into the dropdown on it's initial state when no selection is a
 - Type: `String`
 - Required: No
 
-### icon
+### saveToWpData
 
-The icon to use with the dropdown.
+If `Boolean` :: true, whenever a request is made from the wp-api the resulting posts are saving in a window object `window.wpData.[postType]`
+
+If `string` :: !empty, resulting posts data is saved to the window under this name (eg: `data` == window.data)
+
+- Type: `Boolean` or `string`
+- Required: No
+- Default: `true`
+
+### defaultValue
+
+The value to set the dropdown to after render.
 
 - Type: `String`
 - Required: No
-- Default: `"world"`
 
 ### heading
 

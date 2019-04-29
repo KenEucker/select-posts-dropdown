@@ -11,7 +11,6 @@
 import React from 'react'
 import { Dropdown } from 'semantic-ui-react'
 import apiFetch from '@wordpress/api-fetch'
-import styled from 'styled-components'
 
 const styleLink = document.createElement( 'link' )
 styleLink.rel = 'stylesheet'
@@ -19,24 +18,21 @@ styleLink.href =
   'https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css'
 document.head.append( styleLink )
 
-const Container = styled.div`
-    input.search {
-        left: auto !important;
-    }
-`
-
 export default class SelectPostsDropdown extends React.Component {
+	static defaultProps = {
+		restBase: '/wp-json/wp/v2',
+		placeholder: 'Select Post',
+		fields: [ 'id', 'title' ],
+		postType: 'posts',
+		saveToWpData: true,
+	}
+
 	constructor( props ) {
 		super( props )
 		this.state = {
 			showing_modal: false,
 			options: null,
 		}
-		this.props.restBase = props.restBase || '/wp-json/wp/v2'
-		this.props.placeholder = props.placeholder || 'Select Post'
-		this.props.icon = props.icon || 'world'
-		this.props.fields = props.fields || [ 'id', 'title' ]
-		this.props.postType = props.postType || 'posts'
 	}
 
 	onDropdownSelect( e, el ) {
@@ -57,38 +53,56 @@ export default class SelectPostsDropdown extends React.Component {
 	}
 
 	componentDidMount() {
+		const savingToWpData = !! this.props.saveToWpData
+		const wpDataField = typeof this.props.saveToWpData === 'string' ? this.props.saveToWpData : 'wpData'
+
+		const decodeHtmlText = function( str ) {
+			return str.replace( /&#(\d+);/g, function( match, dec ) {
+				return String.fromCharCode( dec )
+			} )
+		}
+
+		const setOptsAndGlobalPostsFromPosts = ( posts ) => {
+			if ( savingToWpData ) {
+				window[ wpDataField ] = window[ wpDataField ] || {}
+				window[ wpDataField ][ this.props.postType ] = posts
+			}
+
+			const options = []
+			for ( const post of posts ) {
+				options.push( { text: decodeHtmlText( post.title.rendered ), value: post.id } )
+			}
+
+			this.setState( { options, posts } )
+		}
+
+		if ( !! window[ wpDataField ] && !! window[ wpDataField ][ this.props.postType ] ) {
+			setOptsAndGlobalPostsFromPosts( window[ wpDataField ][ this.props.postType ] )
+		}
+
 		apiFetch( { path: `${ this.props.restBase }/${ this.props.postType }` } )
 			.then( ( posts ) => {
-				const options = []
-				for ( const post of posts ) {
-					options.push( { text: post.title.rendered, value: post.id } )
-				}
-
-				this.setState( { options, posts } )
+				setOptsAndGlobalPostsFromPosts( posts )
 			} )
 	}
 
 	render() {
-		const { className, heading, placeholder, icon } = this.props
+		const { className, heading, placeholder } = this.props
 		const { options } = this.state
 
 		return (
-			<Container className={ className }>
+			<div className={ className }>
 				<span>{ heading }</span>
 				<Dropdown
-					button
+					placeholder={ placeholder }
+					onChange={ this.onDropdownSelect.bind( this ) }
 					fluid
 					search
 					selection
-					floating
-					labeled
-					className="icon"
-					icon={ icon }
-					placeholder={ placeholder }
-					onChange={ this.onDropdownSelect.bind( this ) }
 					options={ options }
+					defaultValue={ this.props.selectedValue }
 				/>
-			</Container>
+			</div>
 		)
 	}
 }
