@@ -87,9 +87,9 @@ export default class SelectPostsDropdown extends React.Component {
 	}
 
 	render() {
-		const { className, heading, placeholder } = this.props
+		const { className, heading, multiple, placeholder } = this.props
 		const { options } = this.state
-
+		
 		return (
 			<div className={ className }>
 				<span>{ heading }</span>
@@ -99,6 +99,7 @@ export default class SelectPostsDropdown extends React.Component {
 					fluid
 					search
 					selection
+					multiple={ multiple }
 					options={ options }
 					defaultValue={ this.props.selectedValue }
 				/>

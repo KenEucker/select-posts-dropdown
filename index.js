@@ -145,6 +145,7 @@ function (_React$Component) {
       var _this$props = this.props,
           className = _this$props.className,
           heading = _this$props.heading,
+          multiple = _this$props.multiple,
           placeholder = _this$props.placeholder;
       var options = this.state.options;
       return _react["default"].createElement("div", {
@@ -155,6 +156,7 @@ function (_React$Component) {
         fluid: true,
         search: true,
         selection: true,
+        multiple: multiple,
         options: options,
         defaultValue: this.props.selectedValue
       }));
