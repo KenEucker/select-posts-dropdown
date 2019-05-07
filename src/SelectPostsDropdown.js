@@ -36,7 +36,13 @@ export default class SelectPostsDropdown extends React.Component {
 	}
 
 	onDropdownSelect( e, el ) {
-		const selected = el.options.filter(opt => {return opt.value == el.value}).get(0)
+		let selected = null;
+
+		if ( this.props.multiple || Array.isArray( el.value ) ) {
+			selected = el.options.filter(opt => {return el.value.indexOf(opt.value) !== -1 })
+		} else {
+			selected = el.options.filter(opt => {return opt.value == el.value})
+		}
 
 		if ( !! selected && !! this.props.onChange ) {
 			// TODO: Use the code below to grab more data requested by the user
@@ -48,7 +54,15 @@ export default class SelectPostsDropdown extends React.Component {
 			// 	.map( k => Object.assign( {}, { [ k ]: selected[ k ] } ) )
 			// 	.reduce( ( res, o ) => Object.assign( res, o ), {} )
 
-			this.props.onChange( { id: selected.value, title: selected.text } )
+			selected = selected.map((v) => {
+				return { id: v.value, title: v.text }
+			})
+
+			if ( this.props.multiple ) {
+				this.props.onChange( selected )
+			} else if ( selected && selected.length ) {
+				this.props.onChange( selected[0] )
+			}
 		}
 	}
 
