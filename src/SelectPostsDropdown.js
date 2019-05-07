@@ -90,14 +90,16 @@ export default class SelectPostsDropdown extends React.Component {
 			this.setState( { options, posts } )
 		}
 
-		if ( !! window[ wpDataField ] && !! window[ wpDataField ][ this.props.postType ] ) {
+		if ( !! window[ wpDataField ]
+				&& !! window[ wpDataField ][ this.props.postType ]
+				&& window[ wpDataField ][ this.props.postType ].length ) {
 			setOptsAndGlobalPostsFromPosts( window[ wpDataField ][ this.props.postType ] )
+		} else {
+			apiFetch( { path: `${ this.props.restBase }/${ this.props.postType }` } )
+				.then( ( posts ) => {
+					setOptsAndGlobalPostsFromPosts( posts )
+				} )
 		}
-
-		apiFetch( { path: `${ this.props.restBase }/${ this.props.postType }` } )
-			.then( ( posts ) => {
-				setOptsAndGlobalPostsFromPosts( posts )
-			} )
 	}
 
 	render() {

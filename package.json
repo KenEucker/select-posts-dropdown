@@ -1,6 +1,6 @@
 {
   "name": "select-posts-dropdown",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A react component for listing and selecting wordpress posts using wp-api",
   "main": "index.js",
   "scripts": {

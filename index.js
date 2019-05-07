@@ -147,15 +147,15 @@ function (_React$Component) {
         });
       };
 
-      if (!!window[wpDataField] && !!window[wpDataField][this.props.postType]) {
+      if (!!window[wpDataField] && !!window[wpDataField][this.props.postType] && window[wpDataField][this.props.postType].length) {
         setOptsAndGlobalPostsFromPosts(window[wpDataField][this.props.postType]);
+      } else {
+        (0, _apiFetch["default"])({
+          path: "".concat(this.props.restBase, "/").concat(this.props.postType)
+        }).then(function (posts) {
+          setOptsAndGlobalPostsFromPosts(posts);
+        });
       }
-
-      (0, _apiFetch["default"])({
-        path: "".concat(this.props.restBase, "/").concat(this.props.postType)
-      }).then(function (posts) {
-        setOptsAndGlobalPostsFromPosts(posts);
-      });
     }
   }, {
     key: "render",
