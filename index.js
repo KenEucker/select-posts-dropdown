@@ -59,7 +59,9 @@ function (_React$Component) {
   _createClass(SelectPostsDropdown, [{
     key: "onDropdownSelect",
     value: function onDropdownSelect(e, el) {
-      var selected = el.options[0];
+      var selected = el.options.filter(function (opt) {
+        return opt.value == el.value;
+      }).get(0);
 
       if (!!selected && !!this.props.onChange) {
         // TODO: Use the code below to grab more data requested by the user

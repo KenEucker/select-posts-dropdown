@@ -36,7 +36,7 @@ export default class SelectPostsDropdown extends React.Component {
 	}
 
 	onDropdownSelect( e, el ) {
-		const selected = el.options[ 0 ]
+		const selected = el.options.filter(opt => {return opt.value == el.value}).get(0)
 
 		if ( !! selected && !! this.props.onChange ) {
 			// TODO: Use the code below to grab more data requested by the user
