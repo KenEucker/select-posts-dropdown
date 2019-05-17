@@ -69,6 +69,7 @@ export default class SelectPostsDropdown extends React.Component {
 	componentDidMount() {
 		const savingToWpData = !! this.props.saveToWpData
 		const wpDataField = typeof this.props.saveToWpData === 'string' ? this.props.saveToWpData : 'wpData'
+		const additionalApiParams = this.props.per_page ? `per_page=${this.props.per_page}` : null;
 
 		const decodeHtmlText = function( str ) {
 			return str.replace( /&#(\d+);/g, function( match, dec ) {
@@ -95,7 +96,7 @@ export default class SelectPostsDropdown extends React.Component {
 				&& window[ wpDataField ][ this.props.postType ].length ) {
 			setOptsAndGlobalPostsFromPosts( window[ wpDataField ][ this.props.postType ] )
 		} else {
-			apiFetch( { path: `${ this.props.restBase }/${ this.props.postType }` } )
+			apiFetch( { path: `${ this.props.restBase }/${ this.props.postType }?${additionalApiParams}` } )
 				.then( ( posts ) => {
 					setOptsAndGlobalPostsFromPosts( posts )
 				} )

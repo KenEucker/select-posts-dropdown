@@ -100,6 +100,7 @@ function (_React$Component) {
 
       var savingToWpData = !!this.props.saveToWpData;
       var wpDataField = typeof this.props.saveToWpData === 'string' ? this.props.saveToWpData : 'wpData';
+      var additionalApiParams = this.props.per_page ? "per_page=".concat(this.props.per_page) : null;
 
       var decodeHtmlText = function decodeHtmlText(str) {
         return str.replace(/&#(\d+);/g, function (match, dec) {
@@ -151,7 +152,7 @@ function (_React$Component) {
         setOptsAndGlobalPostsFromPosts(window[wpDataField][this.props.postType]);
       } else {
         (0, _apiFetch["default"])({
-          path: "".concat(this.props.restBase, "/").concat(this.props.postType)
+          path: "".concat(this.props.restBase, "/").concat(this.props.postType, "?").concat(additionalApiParams)
         }).then(function (posts) {
           setOptsAndGlobalPostsFromPosts(posts);
         });
