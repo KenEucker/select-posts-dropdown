@@ -87,7 +87,7 @@ Some text to place above the dropdown, if left empty no text will appear.
 
 ### limit
 
-For a multiple selection dropdown, limit to only this number of selected items
+Limit to only this number of selected posts
 
 - Type: `number`
 - Required: No
