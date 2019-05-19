@@ -71,7 +71,7 @@ If `string` :: !empty, resulting posts data is saved to the window under this na
 - Required: No
 - Default: `true`
 
-### defaultValue
+### selectedValue
 
 The value to set the dropdown to after render.
 
@@ -83,6 +83,13 @@ The value to set the dropdown to after render.
 Some text to place above the dropdown, if left empty no text will appear.
 
 - Type: `string`
+- Required: No
+
+### limit
+
+For a multiple selection dropdown, limit to only this number of selected items
+
+- Type: `number`
 - Required: No
 
 ## License & Attribution
