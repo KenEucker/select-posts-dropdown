@@ -15,6 +15,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -51,14 +59,38 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(SelectPostsDropdown).call(this, props));
     _this.state = {
       showing_modal: false,
-      options: null
+      options: null,
+      currentValue: props.selectedValue
     };
     return _this;
   }
 
   _createClass(SelectPostsDropdown, [{
-    key: "onDropdownSelect",
-    value: function onDropdownSelect(e, el) {
+    key: "handleAddition",
+    value: function handleAddition(e, _ref) {
+      var value = _ref.value;
+      this.setState(function (prevState) {
+        return {
+          options: [{
+            text: value,
+            value: value
+          }].concat(_toConsumableArray(prevState.options))
+        };
+      });
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(e, el) {
+      if (typeof this.props.limit !== 'undefined') {
+        if (el.value.length <= this.props.limit) {
+          this.setState({
+            currentValue: el.value
+          });
+        } else {
+          return;
+        }
+      }
+
       var selected = null;
 
       if (this.props.multiple || Array.isArray(el.value)) {
@@ -167,17 +199,19 @@ function (_React$Component) {
           multiple = _this$props.multiple,
           placeholder = _this$props.placeholder;
       var options = this.state.options;
+      var currentValue = this.state.currentValue;
       return _react["default"].createElement("div", {
         className: className
       }, _react["default"].createElement("span", null, heading), _react["default"].createElement(_semanticUiReact.Dropdown, {
         placeholder: placeholder,
-        onChange: this.onDropdownSelect.bind(this),
+        onAddItem: this.handleAddition.bind(this),
+        onChange: this.handleChange.bind(this),
         fluid: true,
         search: true,
         selection: true,
         multiple: multiple,
         options: options,
-        defaultValue: this.props.selectedValue
+        value: currentValue
       }));
     }
   }]);
