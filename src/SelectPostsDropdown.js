@@ -37,7 +37,6 @@ export default class SelectPostsDropdown extends React.Component {
     }
 
     handleAddition(e, { value }) {
-        console.log('handleAddition', value)
         this.setState(prevState => ({
             options: [{ text: value, value }, ...prevState.options]
         }));
@@ -46,10 +45,8 @@ export default class SelectPostsDropdown extends React.Component {
     handleChange(e, el) {
         if (typeof this.props.limit !== 'undefined') {
             if (el.value.length <= this.props.limit) {
-                console.log('adding on change', el.value)
                 this.setState({ currentValue: el.value });
             } else {
-                console.log('rejecting on change', el.value)
                 return
             }
         }

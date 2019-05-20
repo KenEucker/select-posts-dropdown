@@ -69,7 +69,6 @@ function (_React$Component) {
     key: "handleAddition",
     value: function handleAddition(e, _ref) {
       var value = _ref.value;
-      console.log('handleAddition', value);
       this.setState(function (prevState) {
         return {
           options: [{
@@ -84,12 +83,10 @@ function (_React$Component) {
     value: function handleChange(e, el) {
       if (typeof this.props.limit !== 'undefined') {
         if (el.value.length <= this.props.limit) {
-          console.log('adding on change', el.value);
           this.setState({
             currentValue: el.value
           });
         } else {
-          console.log('rejecting on change', el.value);
           return;
         }
       }
