@@ -154,8 +154,9 @@ function (_React$Component) {
         try {
           for (var _iterator = posts[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var post = _step.value;
+            var text = !!post.title ? post.title.rendered : !!post.name ? post.name : post.slug;
             options.push({
-              text: decodeHtmlText(post.title.rendered),
+              text: text,
               value: post.id
             });
           }
@@ -178,9 +179,10 @@ function (_React$Component) {
           options: options,
           posts: posts
         });
-      };
+      }; // TODO: Refactor this because individual fetches won't grab ALL posts
 
-      if (!!window[wpDataField] && !!window[wpDataField][this.props.postType] && window[wpDataField][this.props.postType].length) {
+
+      if (!!window[wpDataField] && !!window[wpDataField][this.props.postType] && !!window[wpDataField][this.props.postType].length && window[wpDataField][this.props.postType].length > 1) {
         setOptsAndGlobalPostsFromPosts(window[wpDataField][this.props.postType]);
       } else {
         (0, _apiFetch["default"])({

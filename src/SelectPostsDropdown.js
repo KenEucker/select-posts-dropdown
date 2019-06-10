@@ -100,7 +100,8 @@ export default class SelectPostsDropdown extends React.Component {
 
 			const options = []
 			for (const post of posts) {
-				options.push({ text: decodeHtmlText(post.title.rendered), value: post.id })
+				const text = !!post.title ? post.title.rendered : (!!post.name ? post.name : post.slug)
+				options.push({ text, value: post.id })
 			}
 
 			this.setState({ options, posts })
